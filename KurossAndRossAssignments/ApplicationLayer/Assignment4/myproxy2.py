@@ -181,7 +181,14 @@ def SendServerHttpRequest(HttpRequestToServer, ServerURL) :
 
 def ReceiveServerResponse(TalkToServerSocket) :
 
+
+	ts1 = time.time()
+
 	ServerHttpResponse = TalkToServerSocket.recv(ServerReponseMsgSize)
+	while time.time() - ts1 <= 10 :
+		Buffer = TalkToServerSocket.recv(ServerReponseMsgSize)
+		ServerHttpResponse = ServerHttpResponse + Buffer
+
 	return ServerHttpResponse
 
 def SendResponseToClient(TalkToClientSocket, ServerHttpResponse) :
@@ -215,18 +222,18 @@ if __name__ == "__main__" :
 	ProcessList = []
 	ProcessCount = 0
 
-	#while True :
+	while True :
 
-	NewConnection = ListeningSocket.accept()
-	RequestHandlingProcess = mp.Process(target = StartProxyService, args=(NewConnection, ))
-	ProcessList.append(RequestHandlingProcess)
-	RequestHandlingProcess.start()
+		NewConnection = ListeningSocket.accept()
+		RequestHandlingProcess = mp.Process(target = StartProxyService, args=(NewConnection, ))
+		ProcessList.append(RequestHandlingProcess)
+		RequestHandlingProcess.start()
 
-	ProcessCount = ProcessCount + 1
+		ProcessCount = ProcessCount + 1
 
 
-	#for Process in ProcessList :
-	#	Process.join()
+	for Process in ProcessList :
+		Process.join()
 
 
 

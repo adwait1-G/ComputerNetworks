@@ -138,7 +138,7 @@ void HandleControlConnection(int ControlConFd, struct sockaddr_in **ClientContro
             //Process the Commands and get the output. 
             snprintf(FileName,sizeof(FileName), "CommandOutput%d.txt", ClientNumber);
             snprintf(Command, sizeof(Command), "%s > CommandOutput%d.txt", RecvBuf, ClientNumber);
-            
+
             system(Command);
 
             FILE *fp;

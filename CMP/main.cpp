@@ -411,9 +411,12 @@ void PrintPacket(string PacketName) {
 
 void SendPacket(string PacketName) {
 
-	PACKET *Packet;
-	Packet = NamePacketMap[PacketName];
+	PACKET *PacketPtr;
+	PacketPtr = NamePacketMap[PacketName];
 
+	char Packet[DEFAULT_PACKET_SIZE];
+	
+	
 
 }
 
